@@ -51,8 +51,8 @@ export async function GET(request: NextRequest) {
     // Create session
     const token = await createSession(user.id);
 
-    // Redirect to Electron app via custom protocol
-    return NextResponse.redirect(`sealterminal://auth/callback?token=${token}`);
+    // Redirect to success page which handles the custom protocol
+    return NextResponse.redirect(`${process.env.APP_URL}/auth/success?token=${token}`);
   } catch (err) {
     console.error('Google OAuth error:', err);
     return NextResponse.json({ error: 'Authentication failed' }, { status: 500 });
