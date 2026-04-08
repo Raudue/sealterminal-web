@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+:root {
+  --bg-dark: #0a0a12;
+  --bg-card: #111127;
+  --bg-card-hover: #1a1a3e;
+  --border: #2d2b6b;
+  --accent: #6366f1;
+  --accent-glow: rgba(99, 102, 241, 0.4);
+  --accent-light: #a5b4fc;
+  --text: #e2e8f0;
+  --text-dim: #94a3b8;
+  --green: #22c55e;
+  --pixel-font: 'Press Start 2P', monospace;
+  --mono-font: 'JetBrains Mono', 'Consolas', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text);
+  font-family: var(--mono-font);
+  overflow-x: hidden;
+}
+
+/* Scanline overlay for the whole page */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glitch {
+  0% { text-shadow: 2px 0 #ff0040, -2px 0 #00ffff; }
+  25% { text-shadow: -2px 0 #ff0040, 2px 0 #00ffff; }
+  50% { text-shadow: 2px 2px #ff0040, -2px -2px #00ffff; }
+  75% { text-shadow: -2px 2px #ff0040, 2px -2px #00ffff; }
+  100% { text-shadow: 2px 0 #ff0040, -2px 0 #00ffff; }
+}
+
+@keyframes pixelFadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
