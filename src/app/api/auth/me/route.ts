@@ -2,8 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { validateSession } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
+  // Accept token from query param (Electron) or Authorization header (web)
+  const queryToken = request.nextUrl.searchParams.get('token');
   const authHeader = request.headers.get('authorization');
-  const token = authHeader?.replace('Bearer ', '');
+  const token = queryToken || authHeader?.replace('Bearer ', '');
 
   if (!token) {
     return NextResponse.json({ error: 'Missing token' }, { status: 401 });
