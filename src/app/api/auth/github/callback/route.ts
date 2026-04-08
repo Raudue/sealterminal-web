@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { findOrCreateUser, createSession } from '@/lib/auth';
+import { getDb } from '@/lib/db';
 
 export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get('code');
+  const deviceCode = request.nextUrl.searchParams.get('state') || '';
+
   if (!code) {
     return NextResponse.json({ error: 'Missing code' }, { status: 400 });
   }
@@ -63,7 +66,15 @@ export async function GET(request: NextRequest) {
     // Create session
     const token = await createSession(user.id);
 
-    // Redirect to success page which handles the custom protocol
+    // Save token to pending_logins so Electron can poll for it
+    if (deviceCode) {
+      const sql = getDb();
+      await sql`
+        UPDATE pending_logins SET token = ${token} WHERE code = ${deviceCode}
+      `;
+    }
+
+    // Redirect to success page
     return NextResponse.redirect(`${process.env.APP_URL}/auth/success?token=${token}`);
   } catch (err) {
     console.error('GitHub OAuth error:', err);
