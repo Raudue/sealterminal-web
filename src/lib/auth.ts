@@ -86,8 +86,12 @@ export async function createSession(userId: string): Promise<string> {
 
   await sql`
     INSERT INTO sessions (user_id, token, expires_at)
-    VALUES (${userId}, ${token}, ${expiresAt.toISOString()})
+    VALUES (${userId}, ${token}, ${expiresAt})
   `;
+
+  // Verify the session was actually stored
+  const verify = await sql`SELECT id FROM sessions WHERE token = ${token}`;
+  console.log('[auth] createSession: userId=', userId, 'token=', token.slice(0, 8) + '...', 'verified=', verify.length > 0);
 
   return token;
 }
@@ -98,6 +102,10 @@ export async function createSession(userId: string): Promise<string> {
 export async function validateSession(token: string): Promise<UserRow | null> {
   const sql = getDb();
 
+  // First check if session exists at all
+  const sessionCheck = await sql`SELECT id, user_id, expires_at FROM sessions WHERE token = ${token}`;
+  console.log('[auth] validateSession: token=', token.slice(0, 8) + '...', 'sessionFound=', sessionCheck.length, sessionCheck.length > 0 ? `expires=${sessionCheck[0].expires_at}` : '');
+
   const rows = await sql`
     SELECT u.* FROM users u
     JOIN sessions s ON s.user_id = u.id
@@ -105,6 +113,7 @@ export async function validateSession(token: string): Promise<UserRow | null> {
       AND s.expires_at > now()
   `;
 
+  console.log('[auth] validateSession: userFound=', rows.length);
   return rows.length > 0 ? (rows[0] as UserRow) : null;
 }
 
