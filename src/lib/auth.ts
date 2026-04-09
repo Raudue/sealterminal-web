@@ -11,6 +11,8 @@ export interface UserRow {
   name: string | null;
   avatar_url: string | null;
   plan: string;
+  username: string | null;
+  fish: number;
   created_at: string;
   updated_at: string;
 }

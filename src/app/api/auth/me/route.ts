@@ -22,5 +22,7 @@ export async function GET(request: NextRequest) {
     name: user.name,
     avatarUrl: user.avatar_url,
     plan: user.plan,
+    username: user.username,
+    fish: user.fish,
   });
 }
