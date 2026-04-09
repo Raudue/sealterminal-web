@@ -49,7 +49,10 @@ export async function getEquipmentBonuses(userId: string): Promise<{ str: number
     JOIN items i ON i.id = ui.item_id
     WHERE ui.user_id = ${userId} AND ui.equipped = true
   `;
-  return rows[0] || { str: 0, dex: 0, int: 0, cha: 0, end: 0 };
+  const r = rows[0];
+  return r
+    ? { str: Number(r.str), dex: Number(r.dex), int: Number(r.int), cha: Number(r.cha), end: Number(r.end) }
+    : { str: 0, dex: 0, int: 0, cha: 0, end: 0 };
 }
 
 // Total stats = base + equipment
