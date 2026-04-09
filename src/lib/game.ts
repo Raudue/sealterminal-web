@@ -37,7 +37,7 @@ export function calcStreakBonus(end: number, baseFish: number): number {
 }
 
 // Equipment stat totals
-export async function getEquipmentBonuses(userId: string) {
+export async function getEquipmentBonuses(userId: string): Promise<{ str: number; dex: number; int: number; cha: number; end: number }> {
   const sql = getDb();
   const rows = await sql`
     SELECT COALESCE(SUM(i.bonus_str), 0) as str,
