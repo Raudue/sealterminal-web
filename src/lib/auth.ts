@@ -13,6 +13,20 @@ export interface UserRow {
   plan: string;
   username: string | null;
   fish: number;
+  seal_class: string | null;
+  stat_str: number;
+  stat_dex: number;
+  stat_int: number;
+  stat_cha: number;
+  stat_end: number;
+  total_commands: number;
+  total_fish_earned: number;
+  referral_code: string | null;
+  referred_by: string | null;
+  current_streak: number;
+  longest_streak: number;
+  last_login_date: string | null;
+  character_created: boolean;
   created_at: string;
   updated_at: string;
 }

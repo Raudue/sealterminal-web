@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "db:migrate": "node --env-file=.env scripts/migrate.mjs"
+    "db:migrate": "node --env-file=.env scripts/migrate.mjs",
+    "db:migrate-rpg": "node --env-file=.env scripts/migrate-rpg.mjs",
+    "db:seed-rpg": "node --env-file=.env scripts/seed-items.mjs"
   },
   "dependencies": {
     "next": "^15.3.0",
