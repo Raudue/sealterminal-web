@@ -140,7 +140,9 @@ export async function POST(request: NextRequest) {
         'Use retro SNES-era 16-bit pixel art style with clean outlines and limited color palette. ' +
         'The item should be a single object, no characters, centered in the image. ' +
         (referenceImages.length > 0 ? 'Match the pixel art style of the reference image provided. ' : '') +
-        'The background must be solid bright green #00FF00 for chroma keying.';
+        'IMPORTANT: The ENTIRE background must be filled with a single solid flat color of bright green #00FF00. ' +
+        'Every single pixel that is not part of the item must be exactly #00FF00 green. ' +
+        'No gradients, no shadows on the background, no other background colors. Just flat #00FF00 everywhere behind the item.';
 
       const result = await generateImage(prompt, referenceImages);
       const rawBuffer = Buffer.from(result.imageBase64, 'base64');

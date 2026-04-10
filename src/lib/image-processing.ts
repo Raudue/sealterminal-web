@@ -1,9 +1,9 @@
 import sharp from 'sharp';
 
 /**
- * Remove green screen (#00FF00) background from an image buffer.
- * Sets alpha=0 for pixels where green dominates red and blue.
- * Applies edge smoothing to prevent green fringing.
+ * Remove green-ish background from an image buffer.
+ * Uses multiple detection strategies to catch various shades of green
+ * that Gemini generates (not just pure #00FF00).
  */
 export async function removeGreenScreen(inputBuffer: Buffer): Promise<Buffer> {
   const image = sharp(inputBuffer).removeAlpha().ensureAlpha();
@@ -18,27 +18,36 @@ export async function removeGreenScreen(inputBuffer: Buffer): Promise<Buffer> {
     const g = pixels[offset + 1];
     const b = pixels[offset + 2];
 
-    // Detect green-screen pixels: green channel significantly higher than red and blue
-    const isGreen = g > 100 && g > r * 1.4 && g > b * 1.4;
+    // Strategy 1: Pure green screen (#00FF00 and close variants)
+    const isPureGreen = g > 180 && r < 100 && b < 100;
 
-    if (isGreen) {
-      pixels[offset + 3] = 0; // fully transparent
-      // Zero out color to prevent green bleed in semi-transparent areas
+    // Strategy 2: Green-dominant pixels (green channel much higher than others)
+    const isGreenDominant = g > 80 && g > r * 1.2 && g > b * 1.2;
+
+    // Strategy 3: Bright green-ish (catches yellow-green, lime, etc)
+    const isBrightGreen = g > 150 && g > r * 1.1 && g > b * 1.3;
+
+    // Strategy 4: HSL-based - pixel is in green hue range
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    const saturation = max === 0 ? 0 : (max - min) / max;
+    const isGreenHue = g === max && g > 60 && saturation > 0.3 && r < 200 && b < 200;
+
+    if (isPureGreen || isGreenDominant || isBrightGreen || isGreenHue) {
+      pixels[offset + 3] = 0;
       pixels[offset] = 0;
       pixels[offset + 1] = 0;
       pixels[offset + 2] = 0;
     }
   }
 
-  // Edge smoothing pass: reduce green fringe on semi-transparent edges
+  // Edge smoothing pass: reduce green fringe on edges
   for (let y = 1; y < height - 1; y++) {
     for (let x = 1; x < width - 1; x++) {
       const idx = (y * width + x) * channels;
       const alpha = pixels[idx + 3];
 
-      // Only process opaque edge pixels
       if (alpha > 0) {
-        // Check if any neighbor is transparent
         const neighbors = [
           ((y - 1) * width + x) * channels,
           ((y + 1) * width + x) * channels,
@@ -46,22 +55,25 @@ export async function removeGreenScreen(inputBuffer: Buffer): Promise<Buffer> {
           (y * width + (x + 1)) * channels,
         ];
 
-        let hasTransparentNeighbor = false;
+        let transparentCount = 0;
         for (const ni of neighbors) {
-          if (pixels[ni + 3] === 0) {
-            hasTransparentNeighbor = true;
-            break;
-          }
+          if (pixels[ni + 3] === 0) transparentCount++;
         }
 
-        if (hasTransparentNeighbor) {
+        // If most neighbors are transparent, this is likely a stray edge pixel
+        if (transparentCount >= 3) {
+          pixels[idx + 3] = 0;
+          pixels[idx] = 0;
+          pixels[idx + 1] = 0;
+          pixels[idx + 2] = 0;
+        } else if (transparentCount >= 1) {
           // Desaturate green from edge pixels
           const r = pixels[idx];
           const g = pixels[idx + 1];
           const b = pixels[idx + 2];
           if (g > r && g > b) {
             const avg = Math.round((r + b) / 2);
-            pixels[idx + 1] = Math.min(g, Math.max(avg, Math.round(g * 0.7)));
+            pixels[idx + 1] = Math.min(g, Math.max(avg, Math.round(g * 0.6)));
           }
         }
       }
