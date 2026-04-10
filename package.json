@@ -8,13 +8,15 @@
     "start": "next start",
     "db:migrate": "node --env-file=.env scripts/migrate.mjs",
     "db:migrate-rpg": "node --env-file=.env scripts/migrate-rpg.mjs",
-    "db:seed-rpg": "node --env-file=.env scripts/seed-items.mjs"
+    "db:seed-rpg": "node --env-file=.env scripts/seed-items.mjs",
+    "db:migrate-images": "node --env-file=.env scripts/migrate-images.mjs"
   },
   "dependencies": {
     "next": "^15.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "@neondatabase/serverless": "^1.0.0"
+    "@neondatabase/serverless": "^1.0.0",
+    "sharp": "^0.33.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

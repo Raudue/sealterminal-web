@@ -20,6 +20,11 @@ export async function GET(request: NextRequest) {
   `;
   const c = charRows[0];
 
+  // Seal class image
+  const sealClassImg = await sql`
+    SELECT image_url FROM seal_class_images WHERE seal_class = ${c.seal_class}
+  `;
+
   // Equipment (equipped items)
   const equipment = await sql`
     SELECT i.*, ui.equipped FROM user_items ui
@@ -62,6 +67,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({
     character: {
       sealClass: c.seal_class,
+      sealClassImage: sealClassImg.length > 0 ? sealClassImg[0].image_url : null,
       stats: { str: c.stat_str, dex: c.stat_dex, int: c.stat_int, cha: c.stat_cha, end: c.stat_end },
       referralCode: c.referral_code,
       characterCreated: c.character_created,
@@ -75,7 +81,7 @@ export async function GET(request: NextRequest) {
     username: c.username,
     equipment: equipment.map((e: Record<string, unknown>) => ({
       id: e.id, name: e.name, description: e.description, slot: e.slot,
-      rarity: e.rarity, icon: e.icon,
+      rarity: e.rarity, icon: e.icon, imageUrl: e.image_url || null,
       bonusStr: e.bonus_str, bonusDex: e.bonus_dex, bonusInt: e.bonus_int,
       bonusCha: e.bonus_cha, bonusEnd: e.bonus_end,
       fishMultiplier: e.fish_multiplier, cost: e.cost, levelRequired: e.level_required,

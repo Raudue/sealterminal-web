@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({
     items: items.map((i: Record<string, unknown>) => ({
       id: i.id, name: i.name, description: i.description, slot: i.slot,
-      rarity: i.rarity, icon: i.icon,
+      rarity: i.rarity, icon: i.icon, imageUrl: i.image_url || null,
       bonusStr: i.bonus_str, bonusDex: i.bonus_dex, bonusInt: i.bonus_int,
       bonusCha: i.bonus_cha, bonusEnd: i.bonus_end,
       fishMultiplier: i.fish_multiplier, cost: i.cost, levelRequired: i.level_required,
