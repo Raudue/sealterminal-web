@@ -42,11 +42,15 @@ export async function POST(request: NextRequest) {
   try {
     if (type === 'reference') {
       const prompt = customPrompt ||
-        'Generate a 16-bit pixel art style reference image of a cute cartoon seal character. ' +
-        'The seal should be facing forward, sitting upright, with big expressive eyes. ' +
+        'Generate a 16-bit pixel art style image of a cute cartoon seal character. ' +
+        'The seal must be: facing perfectly forward, sitting upright, centered in the image. ' +
+        'Round plump body, two small flippers resting at the sides, small tail at the bottom. ' +
+        'Head is round with big expressive eyes, small nose, neutral friendly expression. ' +
+        'Head at the top third of the image, body in the middle, tail at the bottom. ' +
+        'Gray/blue-gray natural seal fur color. No accessories, no items, no hats. ' +
+        'This is a BASE TEMPLATE that other variants will be recolored from. ' +
         'Use a retro SNES-era 16-bit pixel art style with clean outlines and limited color palette. ' +
-        'The background must be solid bright green #00FF00 for chroma keying. ' +
-        'The seal should be centered in the image.';
+        'The background must be solid bright green #00FF00 for chroma keying.';
 
       const result = await generateImage(prompt);
       const rawBuffer = Buffer.from(result.imageBase64, 'base64');
@@ -72,21 +76,23 @@ export async function POST(request: NextRequest) {
       }
 
       const referenceImages = await getReferenceImageData();
-      const classDescriptions: Record<string, string> = {
-        brawler: 'a strong muscular seal with battle scars, red/orange color accents, fierce expression, wearing light combat gear',
-        swift: 'a sleek agile seal with lightning bolt markings, blue/yellow color accents, alert nimble posture',
-        sage: 'a wise scholarly seal with spectacles, purple/blue color accents, holding a glowing book or scroll',
-        diplomat: 'a charming well-dressed seal with a bow tie, gold/green color accents, friendly confident smile',
-        guardian: 'a sturdy armored seal with a shield emblem, silver/blue color accents, protective stalwart stance',
+
+      const classStyles: Record<string, string> = {
+        brawler: 'warm red/orange fur tint, fierce determined eyes',
+        swift: 'cool blue/cyan fur tint, sharp alert eyes',
+        sage: 'soft purple/violet fur tint, calm wise eyes',
+        diplomat: 'warm golden/amber fur tint, friendly smiling eyes',
+        guardian: 'cool silver/steel-blue fur tint, determined steady eyes',
       };
 
       const prompt = customPrompt ||
-        `Generate a 16-bit pixel art portrait of a ${id} seal character: ${classDescriptions[id]}. ` +
-        'The seal should be facing forward in a front-facing portrait style. ' +
-        'Use retro SNES-era 16-bit pixel art style with clean outlines and limited color palette. ' +
-        (referenceImages.length > 0 ? 'Match the style of the reference seal image provided. ' : '') +
-        'The background must be solid bright green #00FF00 for chroma keying. ' +
-        'The character should be centered in the image.';
+        'Recreate this EXACT same seal from the reference image with IDENTICAL body shape, pose, proportions, size, and position. ' +
+        'Do NOT change ANYTHING about the body silhouette, head shape, flipper position, or pose. ' +
+        `The ONLY changes: ${classStyles[id]}. ` +
+        'Do NOT add any accessories, hats, items, clothing, spectacles, scarves, or objects of any kind. ' +
+        'The seal must be completely bare/naked - just the seal body with a different color tint and eye expression. ' +
+        'Keep the exact same 16-bit pixel art style. ' +
+        'The background must be solid bright green #00FF00 for chroma keying.';
 
       const result = await generateImage(prompt, referenceImages);
       const rawBuffer = Buffer.from(result.imageBase64, 'base64');
