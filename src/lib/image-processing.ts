@@ -1,6 +1,4 @@
 import sharp from 'sharp';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
 
 /**
  * Remove green screen (#00FF00) background from an image buffer.
@@ -75,24 +73,6 @@ export async function removeGreenScreen(inputBuffer: Buffer): Promise<Buffer> {
   })
     .png()
     .toBuffer();
-}
-
-/**
- * Save an image buffer to the public/game-assets/ directory.
- * Returns the relative URL path (e.g., /game-assets/items/rusty-helmet.png).
- */
-export async function saveImageToPublic(
-  imageBuffer: Buffer,
-  subDir: string,
-  filename: string
-): Promise<string> {
-  const publicDir = path.join(process.cwd(), 'public', 'game-assets', subDir);
-  await mkdir(publicDir, { recursive: true });
-
-  const filePath = path.join(publicDir, filename);
-  await writeFile(filePath, imageBuffer);
-
-  return `/game-assets/${subDir}/${filename}`;
 }
 
 /**
