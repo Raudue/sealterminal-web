@@ -2,6 +2,6 @@
   "version": "1.0.0",
   "releaseNotes": "Initial release of SealTerminal.",
   "downloadUrl": "https://www.sealterminal.com/download",
-  "windowsUrl": "https://github.com/Raudue/multiprompter/releases/latest/download/SealTerminal-Setup.exe",
-  "macUrl": "https://github.com/Raudue/multiprompter/releases/latest/download/SealTerminal-darwin-x64.zip"
+  "windowsUrl": "https://github.com/Raudue/sealterminal-releases/releases/download/v1.0.0/SealTerminal-Setup.exe",
+  "macUrl": ""
 }

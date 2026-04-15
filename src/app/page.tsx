@@ -4,26 +4,58 @@ const features = [
   {
     icon: '>>>',
     title: 'MULTI-TAB',
-    desc: 'Run multiple terminals side by side with colored tabs and split panes.',
+    desc: 'Run multiple terminals side by side with colored tabs and split panes. Up to 3-way splits per tab.',
   },
   {
     icon: '[P]',
     title: 'PROFILES',
-    desc: 'Save your workspace setups as profiles. Switch between projects instantly.',
+    desc: 'Save entire workspace setups as profiles. Switch between projects with one click.',
   },
   {
     icon: '{Q}',
     title: 'QUICK CMD',
-    desc: 'One-click quick commands per tab or globally. Automate your workflows.',
+    desc: 'One-click quick commands per tab or globally. Launch Claude, run builds, deploy — instantly.',
   },
   {
-    icon: '</>',
-    title: 'OPEN SRC',
-    desc: 'Built with Electron, React, xterm.js. Fork it. Hack it. Make it yours.',
+    icon: '~$~',
+    title: 'PROCESS MGR',
+    desc: 'See every running process per terminal. Monitor CPU and memory. Kill rogue processes on the spot.',
+  },
+  {
+    icon: '<g>',
+    title: 'GIT BAR',
+    desc: 'Live git status in every tab — branch, ahead/behind, staged changes. Quick commit & push built in.',
+  },
+  {
+    icon: '⚔️',
+    title: 'RPG MODE',
+    desc: 'Your terminal is an RPG. Earn fish, level up your seal, equip gear, complete quests, and climb the ranks.',
+  },
+  {
+    icon: '🛡️',
+    title: 'SEAL CLASSES',
+    desc: 'Choose your class: Brawler, Swift, Sage, Diplomat, or Guardian. Each with unique stat bonuses.',
+  },
+  {
+    icon: '🏪',
+    title: 'SHOP & GEAR',
+    desc: 'Spend fish in the shop. Buy helmets, weapons, armor, and accessories. Equip items for stat boosts.',
   },
 ];
 
+const rpgFeatures = [
+  { label: 'Daily Quests', value: 'Earn fish by completing terminal challenges' },
+  { label: '12 Seal Ranks', value: 'From Baby Seal to Diamond Seal' },
+  { label: '5 Seal Classes', value: 'Each with unique abilities and bonuses' },
+  { label: 'Badges & Streaks', value: 'Collect badges and maintain daily streaks' },
+  { label: 'Referral System', value: 'Invite friends, earn bonus fish' },
+  { label: 'Item Rarities', value: 'Common, Uncommon, Rare, Epic, Legendary' },
+];
+
 export default function Home() {
+  const windowsUrl =
+    'https://github.com/Raudue/sealterminal-releases/releases/download/v1.0.0/SealTerminal-Setup.exe';
+
   return (
     <main>
       {/* NAV */}
@@ -73,6 +105,17 @@ export default function Home() {
             }}
           >
             Features
+          </a>
+          <a
+            href="#rpg"
+            style={{
+              fontFamily: 'var(--mono-font)',
+              fontSize: 13,
+              color: 'var(--text-dim)',
+              textDecoration: 'none',
+            }}
+          >
+            RPG
           </a>
           <a
             href="#download"
@@ -160,7 +203,7 @@ export default function Home() {
             animation: 'pixelFadeIn 0.8s ease-out 0.2s both',
           }}
         >
-          MULTI-TERMINAL MANAGER v1.0
+          TERMINAL RPG v1.0
         </p>
 
         <p
@@ -168,16 +211,18 @@ export default function Home() {
             fontFamily: 'var(--mono-font)',
             fontSize: 16,
             color: 'var(--text-dim)',
-            maxWidth: 520,
+            maxWidth: 560,
             lineHeight: 1.7,
             marginBottom: 40,
             animation: 'pixelFadeIn 0.8s ease-out 0.4s both',
           }}
         >
-          A terminal multiplexer for developers who want{' '}
-          <span style={{ color: 'var(--green)' }}>tabs</span>,{' '}
-          <span style={{ color: '#f59e0b' }}>profiles</span>, and{' '}
-          <span style={{ color: '#ec4899' }}>quick commands</span> — without the config hell.
+          A multi-terminal manager where every command counts.{' '}
+          <span style={{ color: 'var(--green)' }}>Tabs</span>,{' '}
+          <span style={{ color: '#f59e0b' }}>profiles</span>,{' '}
+          <span style={{ color: '#ec4899' }}>split panes</span>, and a full{' '}
+          <span style={{ color: '#a855f7' }}>RPG system</span> — earn fish, level up your seal,
+          and gear up.
         </p>
 
         {/* Terminal preview block */}
@@ -187,7 +232,7 @@ export default function Home() {
             border: '2px solid var(--border)',
             borderRadius: 0,
             padding: 0,
-            maxWidth: 560,
+            maxWidth: 600,
             width: '100%',
             textAlign: 'left',
             boxShadow: '6px 6px 0 rgba(99, 102, 241, 0.15)',
@@ -235,15 +280,11 @@ export default function Home() {
               <span style={{ color: 'var(--text-dim)' }}>$ </span>
               <span style={{ color: 'var(--text)' }}>sealterminal --launch</span>
             </div>
-            <div style={{ color: 'var(--accent-light)' }}>
-              {'>'} Loading 3 profiles...
-            </div>
-            <div style={{ color: 'var(--accent-light)' }}>
-              {'>'} Opening 8 terminal tabs...
-            </div>
-            <div style={{ color: 'var(--green)' }}>
-              {'>'} Ready in 0.4s
-            </div>
+            <div style={{ color: 'var(--accent-light)' }}>{'>'} Loading Sage Seal profile...</div>
+            <div style={{ color: 'var(--accent-light)' }}>{'>'} Opening 4 terminal tabs (2 split)...</div>
+            <div style={{ color: '#f59e0b' }}>{'>'} Daily quest: Run 10 commands [3/10]</div>
+            <div style={{ color: 'var(--green)' }}>{'>'} +2 fish earned! Total: 847</div>
+            <div style={{ color: '#a855f7' }}>{'>'} Level up! You are now a Hunter Seal (Rank 6)</div>
             <div style={{ marginTop: 4 }}>
               <span style={{ color: 'var(--green)' }}>seal@dev</span>
               <span style={{ color: 'var(--text-dim)' }}>:</span>
@@ -262,6 +303,36 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* Quick download CTA under hero */}
+        <a
+          href={windowsUrl}
+          style={{
+            marginTop: 40,
+            fontFamily: 'var(--pixel-font)',
+            fontSize: 11,
+            color: '#fff',
+            backgroundColor: 'var(--accent)',
+            padding: '14px 32px',
+            textDecoration: 'none',
+            border: '2px solid var(--accent-light)',
+            boxShadow: '4px 4px 0 rgba(99, 102, 241, 0.3)',
+            animation: 'pixelFadeIn 0.8s ease-out 0.8s both',
+          }}
+        >
+          DOWNLOAD FOR WINDOWS
+        </a>
+        <span
+          style={{
+            fontFamily: 'var(--mono-font)',
+            fontSize: 11,
+            color: 'var(--text-dim)',
+            marginTop: 8,
+            animation: 'pixelFadeIn 0.8s ease-out 1s both',
+          }}
+        >
+          v1.0.0 — Windows 10/11 — macOS coming soon
+        </span>
       </section>
 
       {/* FEATURES */}
@@ -269,7 +340,7 @@ export default function Home() {
         id="features"
         style={{
           padding: '80px 24px',
-          maxWidth: 900,
+          maxWidth: 960,
           margin: '0 auto',
         }}
       >
@@ -289,7 +360,7 @@ export default function Home() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
             gap: 20,
           }}
         >
@@ -339,6 +410,146 @@ export default function Home() {
         </div>
       </section>
 
+      {/* RPG SECTION */}
+      <section
+        id="rpg"
+        style={{
+          padding: '80px 24px',
+          borderTop: '1px solid var(--border)',
+        }}
+      >
+        <div style={{ maxWidth: 960, margin: '0 auto' }}>
+          <h2
+            style={{
+              fontFamily: 'var(--pixel-font)',
+              fontSize: 18,
+              color: 'var(--accent-light)',
+              textAlign: 'center',
+              marginBottom: 16,
+              letterSpacing: 3,
+            }}
+          >
+            {'// RPG SYSTEM'}
+          </h2>
+          <p
+            style={{
+              fontFamily: 'var(--mono-font)',
+              fontSize: 14,
+              color: 'var(--text-dim)',
+              textAlign: 'center',
+              maxWidth: 500,
+              margin: '0 auto 48px',
+              lineHeight: 1.7,
+            }}
+          >
+            Every command you run earns fish. Level up your seal, complete quests, and collect rare
+            gear. Your terminal is now an adventure.
+          </p>
+
+          {/* Seal classes */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: 16,
+              flexWrap: 'wrap',
+              marginBottom: 48,
+            }}
+          >
+            {[
+              { emoji: '🔥', name: 'Brawler', stat: 'STR', color: '#ef4444' },
+              { emoji: '⚡', name: 'Swift', stat: 'DEX', color: '#f59e0b' },
+              { emoji: '🧠', name: 'Sage', stat: 'INT', color: '#6366f1' },
+              { emoji: '💬', name: 'Diplomat', stat: 'CHA', color: '#ec4899' },
+              { emoji: '🛡️', name: 'Guardian', stat: 'END', color: '#22c55e' },
+            ].map((c) => (
+              <div
+                key={c.name}
+                style={{
+                  backgroundColor: 'var(--bg-card)',
+                  border: `2px solid ${c.color}40`,
+                  padding: '20px 24px',
+                  textAlign: 'center',
+                  minWidth: 120,
+                }}
+              >
+                <div style={{ fontSize: 28, marginBottom: 8 }}>{c.emoji}</div>
+                <div
+                  style={{
+                    fontFamily: 'var(--pixel-font)',
+                    fontSize: 9,
+                    color: c.color,
+                    letterSpacing: 1,
+                    marginBottom: 4,
+                  }}
+                >
+                  {c.name.toUpperCase()}
+                </div>
+                <div
+                  style={{
+                    fontFamily: 'var(--mono-font)',
+                    fontSize: 11,
+                    color: 'var(--text-dim)',
+                  }}
+                >
+                  Primary: {c.stat}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* RPG features list */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+              gap: 12,
+              maxWidth: 640,
+              margin: '0 auto',
+            }}
+          >
+            {rpgFeatures.map((f) => (
+              <div
+                key={f.label}
+                style={{
+                  display: 'flex',
+                  gap: 12,
+                  padding: '12px 16px',
+                  backgroundColor: 'var(--bg-card)',
+                  border: '1px solid var(--border)',
+                }}
+              >
+                <span style={{ color: 'var(--green)', fontFamily: 'var(--mono-font)', fontSize: 13 }}>
+                  +
+                </span>
+                <div>
+                  <div
+                    style={{
+                      fontFamily: 'var(--pixel-font)',
+                      fontSize: 8,
+                      color: 'var(--accent-light)',
+                      marginBottom: 4,
+                      letterSpacing: 1,
+                    }}
+                  >
+                    {f.label.toUpperCase()}
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: 'var(--mono-font)',
+                      fontSize: 12,
+                      color: 'var(--text-dim)',
+                    }}
+                  >
+                    {f.value}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* DOWNLOAD / CTA */}
       <section
         id="download"
@@ -365,15 +576,16 @@ export default function Home() {
             fontSize: 14,
             color: 'var(--text-dim)',
             marginBottom: 32,
-            maxWidth: 400,
+            maxWidth: 440,
             margin: '0 auto 32px',
+            lineHeight: 1.7,
           }}
         >
-          Free to use. Open source. Available for Windows, macOS, and Linux.
+          Free to use. Available for Windows now. macOS and Linux coming soon.
         </p>
         <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
           <a
-            href="#"
+            href={windowsUrl}
             style={{
               fontFamily: 'var(--pixel-font)',
               fontSize: 11,
@@ -388,39 +600,32 @@ export default function Home() {
           >
             WINDOWS .EXE
           </a>
-          <a
-            href="#"
+          <span
             style={{
               fontFamily: 'var(--pixel-font)',
               fontSize: 11,
-              color: 'var(--accent-light)',
+              color: 'var(--text-dim)',
               backgroundColor: 'transparent',
               padding: '14px 28px',
-              textDecoration: 'none',
               border: '2px solid var(--border)',
               boxShadow: '4px 4px 0 rgba(99, 102, 241, 0.1)',
-              transition: 'transform 0.1s, box-shadow 0.1s',
+              opacity: 0.5,
             }}
           >
-            macOS .DMG
-          </a>
-          <a
-            href="#"
-            style={{
-              fontFamily: 'var(--pixel-font)',
-              fontSize: 11,
-              color: 'var(--accent-light)',
-              backgroundColor: 'transparent',
-              padding: '14px 28px',
-              textDecoration: 'none',
-              border: '2px solid var(--border)',
-              boxShadow: '4px 4px 0 rgba(99, 102, 241, 0.1)',
-              transition: 'transform 0.1s, box-shadow 0.1s',
-            }}
-          >
-            LINUX .DEB
-          </a>
+            macOS — COMING SOON
+          </span>
         </div>
+        <p
+          style={{
+            fontFamily: 'var(--mono-font)',
+            fontSize: 11,
+            color: 'var(--text-dim)',
+            marginTop: 16,
+            opacity: 0.6,
+          }}
+        >
+          v1.0.0 — Windows 10/11 (x64) — ~170 MB
+        </p>
       </section>
 
       {/* FOOTER */}
