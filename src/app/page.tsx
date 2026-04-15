@@ -273,30 +273,36 @@ export default function Home() {
               lineHeight: 1.8,
             }}
           >
+            <div style={{ color: 'var(--text-dim)', fontSize: 11, marginBottom: 6 }}>
+              {'┌──────────────────────────────────────┐'}
+            </div>
+            <div style={{ color: 'var(--text-dim)', fontSize: 11 }}>
+              {'│'} <span style={{ color: 'var(--accent-light)' }}>Tab 1</span>{' · '}
+              <span style={{ color: '#22c55e' }}>frontend</span>{'  '}
+              <span style={{ color: 'var(--accent-light)' }}>Tab 2</span>{' · '}
+              <span style={{ color: '#f59e0b' }}>backend</span>{'  '}
+              <span style={{ color: 'var(--accent-light)' }}>Tab 3</span>{' · '}
+              <span style={{ color: '#ec4899' }}>deploy</span> {'│'}
+            </div>
+            <div style={{ color: 'var(--text-dim)', fontSize: 11, marginBottom: 6 }}>
+              {'└──────────────────────────────────────┘'}
+            </div>
             <div>
-              <span style={{ color: 'var(--green)' }}>user@dev</span>
-              <span style={{ color: 'var(--text-dim)' }}>:</span>
-              <span style={{ color: '#60a5fa' }}>~/myapp</span>
-              <span style={{ color: 'var(--text-dim)' }}>$ </span>
-              <span style={{ color: 'var(--text)' }}>npm run dev</span>
+              <span style={{ color: '#a855f7' }}>🧠 Sage Seal</span>
+              <span style={{ color: 'var(--text-dim)' }}> · Lv.6 · </span>
+              <span style={{ color: '#f59e0b' }}>847 fish</span>
+              <span style={{ color: 'var(--text-dim)' }}> · streak: </span>
+              <span style={{ color: '#22c55e' }}>5d</span>
             </div>
-            <div style={{ color: 'var(--text-dim)' }}>  ▸ Next.js 15.2 (turbopack)</div>
-            <div style={{ color: 'var(--text-dim)' }}>  ▸ Local: http://localhost:3000</div>
-            <div style={{ color: 'var(--green)' }}>  ✓ Ready in 1.2s</div>
-            <div style={{ marginTop: 6 }}>
-              <span style={{ color: 'var(--green)' }}>user@dev</span>
-              <span style={{ color: 'var(--text-dim)' }}>:</span>
-              <span style={{ color: '#60a5fa' }}>~/myapp</span>
-              <span style={{ color: 'var(--text-dim)' }}>$ </span>
-              <span style={{ color: 'var(--text)' }}>git push origin main</span>
+            <div style={{ color: 'var(--text-dim)', marginTop: 2 }}>
+              Quest: <span style={{ color: '#f59e0b' }}>Run 10 commands</span> [████████░░] 8/10
             </div>
-            <div style={{ color: 'var(--text-dim)' }}>  To github.com:user/myapp.git</div>
-            <div style={{ color: 'var(--text-dim)' }}>    a3f8c21..b7e4d09 main {'->'} main</div>
+            <div style={{ color: 'var(--green)', marginTop: 6 }}>
+              + Equipped <span style={{ color: '#a855f7' }}>Arcane Staff</span> (epic) — INT +12
+            </div>
             <div style={{ marginTop: 6 }}>
-              <span style={{ color: 'var(--green)' }}>user@dev</span>
-              <span style={{ color: 'var(--text-dim)' }}>:</span>
-              <span style={{ color: '#60a5fa' }}>~/myapp</span>
-              <span style={{ color: 'var(--text-dim)' }}>$ </span>
+              <span style={{ color: 'var(--green)' }}>~</span>
+              <span style={{ color: 'var(--text-dim)' }}> $ </span>
               <span
                 style={{
                   display: 'inline-block',
