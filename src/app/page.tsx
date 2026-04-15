@@ -169,8 +169,8 @@ export default function Home() {
           <Image
             src="/terminalseal.png"
             alt="SealTerminal Mascot"
-            width={200}
-            height={200}
+            width={136}
+            height={257}
             priority
             style={{
               imageRendering: 'auto',
@@ -274,21 +274,28 @@ export default function Home() {
             }}
           >
             <div>
-              <span style={{ color: 'var(--green)' }}>seal@dev</span>
+              <span style={{ color: 'var(--green)' }}>user@dev</span>
               <span style={{ color: 'var(--text-dim)' }}>:</span>
-              <span style={{ color: '#60a5fa' }}>~/projects</span>
+              <span style={{ color: '#60a5fa' }}>~/myapp</span>
               <span style={{ color: 'var(--text-dim)' }}>$ </span>
-              <span style={{ color: 'var(--text)' }}>sealterminal --launch</span>
+              <span style={{ color: 'var(--text)' }}>npm run dev</span>
             </div>
-            <div style={{ color: 'var(--accent-light)' }}>{'>'} Loading Sage Seal profile...</div>
-            <div style={{ color: 'var(--accent-light)' }}>{'>'} Opening 4 terminal tabs (2 split)...</div>
-            <div style={{ color: '#f59e0b' }}>{'>'} Daily quest: Run 10 commands [3/10]</div>
-            <div style={{ color: 'var(--green)' }}>{'>'} +2 fish earned! Total: 847</div>
-            <div style={{ color: '#a855f7' }}>{'>'} Level up! You are now a Hunter Seal (Rank 6)</div>
-            <div style={{ marginTop: 4 }}>
-              <span style={{ color: 'var(--green)' }}>seal@dev</span>
+            <div style={{ color: 'var(--text-dim)' }}>  ▸ Next.js 15.2 (turbopack)</div>
+            <div style={{ color: 'var(--text-dim)' }}>  ▸ Local: http://localhost:3000</div>
+            <div style={{ color: 'var(--green)' }}>  ✓ Ready in 1.2s</div>
+            <div style={{ marginTop: 6 }}>
+              <span style={{ color: 'var(--green)' }}>user@dev</span>
               <span style={{ color: 'var(--text-dim)' }}>:</span>
-              <span style={{ color: '#60a5fa' }}>~/projects</span>
+              <span style={{ color: '#60a5fa' }}>~/myapp</span>
+              <span style={{ color: 'var(--text-dim)' }}>$ </span>
+              <span style={{ color: 'var(--text)' }}>git push origin main</span>
+            </div>
+            <div style={{ color: 'var(--text-dim)' }}>  To github.com:user/myapp.git</div>
+            <div style={{ color: 'var(--text-dim)' }}>    a3f8c21..b7e4d09 main {'->'} main</div>
+            <div style={{ marginTop: 6 }}>
+              <span style={{ color: 'var(--green)' }}>user@dev</span>
+              <span style={{ color: 'var(--text-dim)' }}>:</span>
+              <span style={{ color: '#60a5fa' }}>~/myapp</span>
               <span style={{ color: 'var(--text-dim)' }}>$ </span>
               <span
                 style={{
