@@ -1,7 +1,7 @@
 {
-  "version": "1.0.0",
-  "releaseNotes": "Initial release of SealTerminal.",
+  "version": "1.1.0",
+  "releaseNotes": "Update checker, profile switching keeps terminals alive, Daily Rush streak fix.",
   "downloadUrl": "https://www.sealterminal.com/download",
-  "windowsUrl": "https://github.com/Raudue/sealterminal-releases/releases/download/v1.0.0/SealTerminal-Setup.exe",
+  "windowsUrl": "https://github.com/Raudue/sealterminal-releases/releases/download/v1.1.0/SealTerminal-Setup.exe",
   "macUrl": ""
 }
