@@ -54,7 +54,7 @@ const rpgFeatures = [
 
 export default function Home() {
   const windowsUrl =
-    'https://github.com/Raudue/sealterminal-releases/releases/download/v1.2.1/SealTerminal-Setup.exe';
+    'https://github.com/Raudue/sealterminal-releases/releases/download/v1.3.0/SealTerminal-Setup.exe';
 
   return (
     <main>
@@ -203,7 +203,7 @@ export default function Home() {
             animation: 'pixelFadeIn 0.8s ease-out 0.2s both',
           }}
         >
-          TERMINAL RPG v1.2
+          TERMINAL RPG v1.3
         </p>
 
         <p
@@ -344,7 +344,7 @@ export default function Home() {
             animation: 'pixelFadeIn 0.8s ease-out 1s both',
           }}
         >
-          v1.2.1 — Windows 10/11 — macOS coming soon
+          v1.3.0 — Windows 10/11 — macOS coming soon
         </span>
       </section>
 
@@ -637,7 +637,7 @@ export default function Home() {
             opacity: 0.6,
           }}
         >
-          v1.2.1 — Windows 10/11 (x64) — ~170 MB
+          v1.3.0 — Windows 10/11 (x64) — ~170 MB
         </p>
       </section>
 

@@ -1,7 +1,7 @@
 {
-  "version": "1.2.1",
-  "releaseNotes": "More reliable update check and download. Plus everything in 1.2.0: in-app updates, notifications when a terminal finishes, Shift+Enter for new lines in Claude, reliable copy/paste of long text, tabs remember their folder, profile and daily quest fixes.",
+  "version": "1.3.0",
+  "releaseNotes": "Active and Inactive tab rows (most recently finished first), status on every tab, Claude done/needs-input notifications, find any tab with Ctrl+Shift+P, refreshed sidebar and quick commands.",
   "downloadUrl": "https://www.sealterminal.com/download",
-  "windowsUrl": "https://github.com/Raudue/sealterminal-releases/releases/download/v1.2.1/SealTerminal-Setup.exe",
+  "windowsUrl": "https://github.com/Raudue/sealterminal-releases/releases/download/v1.3.0/SealTerminal-Setup.exe",
   "macUrl": ""
 }
