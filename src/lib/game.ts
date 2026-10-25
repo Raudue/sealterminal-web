@@ -252,36 +252,39 @@ export async function autoAssignQuests(userId: string): Promise<void> {
   startOfWeek.setDate(today.getDate() - today.getDay());
   startOfWeek.setHours(0, 0, 0, 0);
 
-  // Get all quest definitions
-  const allQuests = await sql`SELECT * FROM quest_definitions`;
+  const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const endOfDay = new Date(today);
+  endOfDay.setHours(23, 59, 59, 999);
+  const endOfWeek = new Date(startOfWeek);
+  endOfWeek.setDate(endOfWeek.getDate() + 7);
+
+  // Runs on every fish sync, so look everything up in two queries instead of one per quest.
+  // Only quests started this week (daily/weekly) or never expiring (boss) can count as assigned.
+  const [allQuests, assigned] = await Promise.all([
+    sql`SELECT id, quest_type FROM quest_definitions`,
+    sql`
+      SELECT quest_id, started_at FROM user_quests
+      WHERE user_id = ${userId}
+        AND (started_at >= ${startOfWeek} OR expires_at IS NULL)
+    `,
+  ]);
+
+  const assignedSince = (questId: unknown, since: Date | null) =>
+    assigned.some(
+      (uq: Record<string, unknown>) =>
+        uq.quest_id === questId && (since === null || new Date(uq.started_at as string) >= since)
+    );
 
   for (const quest of allQuests) {
     if (quest.quest_type === 'daily') {
-      const endOfDay = new Date(today);
-      endOfDay.setHours(23, 59, 59, 999);
-
-      // Check if already assigned today
-      const existing = await sql`
-        SELECT id FROM user_quests
-        WHERE user_id = ${userId} AND quest_id = ${quest.id}
-          AND started_at >= ${new Date(today.getFullYear(), today.getMonth(), today.getDate())}
-      `;
-      if (existing.length === 0) {
+      if (!assignedSince(quest.id, startOfDay)) {
         await sql`
           INSERT INTO user_quests (user_id, quest_id, expires_at)
           VALUES (${userId}, ${quest.id}, ${endOfDay})
         `;
       }
     } else if (quest.quest_type === 'weekly') {
-      const endOfWeek = new Date(startOfWeek);
-      endOfWeek.setDate(endOfWeek.getDate() + 7);
-
-      const existing = await sql`
-        SELECT id FROM user_quests
-        WHERE user_id = ${userId} AND quest_id = ${quest.id}
-          AND started_at >= ${startOfWeek}
-      `;
-      if (existing.length === 0) {
+      if (!assignedSince(quest.id, startOfWeek)) {
         await sql`
           INSERT INTO user_quests (user_id, quest_id, expires_at)
           VALUES (${userId}, ${quest.id}, ${endOfWeek})
@@ -289,11 +292,7 @@ export async function autoAssignQuests(userId: string): Promise<void> {
       }
     } else if (quest.quest_type === 'boss') {
       // Only assign once, ever
-      const existing = await sql`
-        SELECT id FROM user_quests
-        WHERE user_id = ${userId} AND quest_id = ${quest.id}
-      `;
-      if (existing.length === 0) {
+      if (!assignedSince(quest.id, null)) {
         await sql`
           INSERT INTO user_quests (user_id, quest_id)
           VALUES (${userId}, ${quest.id})

@@ -1,7 +1,7 @@
 {
-  "version": "1.1.0",
-  "releaseNotes": "Update checker, profile switching keeps terminals alive, Daily Rush streak fix.",
+  "version": "1.2.0",
+  "releaseNotes": "In-app updates, desktop notifications when a terminal finishes, Shift+Enter for new lines in Claude, reliable copy/paste of long text, tabs remember their folder, profile editing fixes, daily quest and streak fixes.",
   "downloadUrl": "https://www.sealterminal.com/download",
-  "windowsUrl": "https://github.com/Raudue/sealterminal-releases/releases/download/v1.1.0/SealTerminal-Setup.exe",
+  "windowsUrl": "https://github.com/Raudue/sealterminal-releases/releases/download/v1.2.0/SealTerminal-Setup.exe",
   "macUrl": ""
 }

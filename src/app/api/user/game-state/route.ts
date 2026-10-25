@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { validateSession } from '@/lib/auth';
 import { getDb } from '@/lib/db';
+import { autoAssignQuests } from '@/lib/game';
 
 export async function GET(request: NextRequest) {
   const token = request.nextUrl.searchParams.get('token');
@@ -32,7 +33,8 @@ export async function GET(request: NextRequest) {
     WHERE ui.user_id = ${user.id} AND ui.equipped = true
   `;
 
-  // Active quests
+  // Active quests (assign today's dailies first, or the list shows yesterday's until the Quests tab is opened)
+  await autoAssignQuests(user.id);
   const quests = await sql`
     SELECT uq.id as user_quest_id, uq.progress, uq.completed, uq.reward_claimed,
            uq.started_at, uq.completed_at, uq.expires_at,

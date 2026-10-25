@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { validateSession } from '@/lib/auth';
 import { getDb } from '@/lib/db';
-import { calcStatMultiplier, getEquipmentBonuses, totalStats, distributeReferralFish, updateQuestProgress, checkBadges } from '@/lib/game';
+import { calcStatMultiplier, getEquipmentBonuses, totalStats, distributeReferralFish, updateQuestProgress, checkBadges, autoAssignQuests } from '@/lib/game';
 
 export async function POST(request: NextRequest) {
   const token = request.nextUrl.searchParams.get('token');
@@ -68,7 +68,11 @@ export async function POST(request: NextRequest) {
     RETURNING fish
   `;
 
-  // Update quest progress
+  // Update quest progress. Make sure today's daily/weekly quests exist first; they used to
+  // be created only when the Quests tab was opened, so earlier activity counted for nothing.
+  if (u.character_created) {
+    await autoAssignQuests(user.id);
+  }
   const questUpdates: Array<{ questName: string; completed: boolean }> = [];
   if (commands > 0) {
     const cmdQuests = await updateQuestProgress(user.id, 'commands', commands);
